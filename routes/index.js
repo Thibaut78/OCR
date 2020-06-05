@@ -14,14 +14,28 @@ router.get('/', function(req, res, next) {
     psm: 3,
   }
   var result;
-  tesseract.recognize("image.png", config)
+  tesseract.recognize("image1.png", config)
     .then(text => {
       result = text;
-      console.log("-------OCR RESULT-------");      
+
       console.log(text);
+
+      const words = text.split(' ');
+      last = 'start';
+      value = 0;
+      words.forEach(element => {
+        if (last == 'Facture')
+          value = element.replace(new RegExp("[^(0-9\.)]", "g"), '');
+        last = element;
+        //console.log(element + " " + last);
+      });
+
+      console.log(" ");
+      console.log("-------OCR RESULT-------");      
+      console.log("Prix indiquer sur le ticket de caisse: "+ value);
       console.log("------------------------");
-    })
-    .catch(error => {
+
+
       console.log(error.message)
     })
 
