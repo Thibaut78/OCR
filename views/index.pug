@@ -5,6 +5,4 @@ block content
   p Welcome to #{title}
   //<html> <label for="avatar">Importer une facture:</label> <input type="file" id="avatar" name="avatar"> </html>
 
-  <html><form method="post" action="/file" enctype="multipart/form-data"> <div> <label for="file">Importer une facture:</label> <input type="file" id="file" name="file" multiple></div><div><button>Envoyer</button> </div></form></html>
-
-  
+  <html><p>Image Upload</p><form method="post" action="file" enctype="multipart/form-data"> <input type="file" name="image" /><br /><br />  <button type="submit" name="upload">Upload</button> </form> </body></html>

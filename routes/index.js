@@ -3,13 +3,26 @@ var router = express.Router();
 var tesseract = require('node-tesseract-ocr');
 //const tesseract = require("node-tesseract")
  
+const path = require('path');
+const upload = require('./uploadMiddleware');
+const Resize = require('./Resize');
 
-router.post('/file',  function(req, res, next) {
-  console.log("File upload");
-  console.log(res);
+router.post('/file', upload.single('image'), async function (req, res) {
+  const imagePath = path.join(__dirname, '/upload');
+  const fileUpload = new Resize(imagePath);
+  if (!req.file) {
+    res.status(401).json({error: 'Error'});
+  }
+  const filename = await fileUpload.save(req.file.buffer);
+  return res.status(200).json({ name: filename });
 });
 
-/* GET home page. */
+
+/*router.post('/files',  function(req, res, next) {
+  console.log("File upload");
+  console.log(res);
+});*/
+
 router.get('/', function(req, res, next) {
   const fs = require('fs');
 const pdf = require('pdf-parse');
