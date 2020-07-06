@@ -1,8 +1,34 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= "Bienvenu"
+  p #{title}
+
+  <html><p>Image Upload</p><form method="post" action="file" enctype="multipart/form-data"> <input type="file" name="image" /><br /><br />  <button type="submit" name="upload">Upload</button> </form> <br><br><br></body></html>
+  
+
+  h2= "Resultat:"
+  p #{Resultat}
   //<html> <label for="avatar">Importer une facture:</label> <input type="file" id="avatar" name="avatar"> </html>
 
-  <html><p>Image Upload</p><form method="post" action="file" enctype="multipart/form-data"> <input type="file" name="image" /><br /><br />  <button type="submit" name="upload">Upload</button> </form> </body></html>
+  //<html> <br> <br> <br> <br> <table>     <thead>        <tr>            <th colspan="2">Factures et Relevé bancaire</th>        </tr>    </thead>    <tbody>        <tr>           <td>Factures</td>            <td>Dépenses</td>        </tr>    </tbody></table></html>
+  <style> table,td {    border: 1px solid #333;}thead,tfoot {    background-color: #333;    color: #fff;}</style>
+
+  //h1= "Res"
+  //p #{Resultat}
+  blocktable(style="text-align:center;")
+    table.table.table-striped(style="text-align:center;")
+      tr
+        th Name
+        th Bank
+        each val in Resultat
+          tr
+            td= val
+            td= "Bank"
+
+  h1= "CSV"
+  p #{csv}
+  ul
+  each val in csv
+    li= val
+         
