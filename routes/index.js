@@ -12,6 +12,32 @@ const pdf = require('pdf-parse');
 const csvFilePath='./RelevéBancaire.csv';
 const csv=require('csvtojson');
 
+function reset() {
+  directory = 'upload';
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+  
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw err;
+      });
+    }
+  });
+  fs.rename('./log.txt', './oldlog.txt', function(err) {
+    if ( err ) console.log('ERROR: ' + err);
+  });
+  fs.closeSync(fs.openSync('log.txt', 'w'));
+}
+
+
+function removeimage(filename) {  
+  fs.unlink(filename, function (err) {
+      if (err) throw err;
+    console.log('File deleted!');
+  });
+  return (true);
+}
+
 function getCsv(name) {
   var csvobj = [];
   //const csvFilePath='./RelevéBancaire.csv';
@@ -24,10 +50,9 @@ function getCsv(name) {
 
             csvobj.push(tmp);
             })
-
-    console.log(csvobj);
-  return(csvobj);
-        })
+      console.log(csvobj);
+       return(csvobj);
+      })
   console.log(csvobj);
   return(csvobj);
 }
@@ -154,11 +179,11 @@ router.post('/file', upload.single('image'), async function (req, res) {
 
   Res = getRes(filename);
   var csv = getCsv('./RelevéBancaire.csv');
-  //Res = ["Facture 12€", "Facture 23.4€"];
+  Res = ["Facture 12€", "Facture 23.4€"];
   console.log(Res);
   //return res.render(200).json({ name: filename, Resultat: Res});
   return res.render('index', { title: "Resultat dans la console", Resultat: Res, csv: csv});
-  return res.render('index', { title: "Resultat dans la console", Resultat: ["Facture 12€", "Facture 23.4€"] });
+  return res.render('index', { title: "Resultat dans la console", Resultat: ["Facture 12€", "Facture 23.4€"], csv: csv });
 });
 
 /*router.post('/files',  function(req, res, next) {
